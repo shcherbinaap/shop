@@ -14,11 +14,9 @@
 
                 <h1 class="my-4">GeekShop</h1>
                 <div class="list-group">
-                    <a href="#" class="list-group-item">Новинки</a>
-                    <a href="#" class="list-group-item">Одежда</a>
-                    <a href="#" class="list-group-item">Обувь</a>
-                    <a href="#" class="list-group-item">Аксессуары</a>
-                    <a href="#" class="list-group-item">Подарки</a>
+                    {% for catalog in catalogs %}
+                        <a href="#" class="list-group-item">{{ catalog.name }}</a>
+                    {% endfor %}
                 </div>
 
             </div>
@@ -58,14 +56,14 @@
                     {% for product in products %}
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100">
-                            <a href="#">
+                            <a href="{{ product.pk }}">
                                 <img class="card-img-top"
-                                     src="{% static product.img %}"
+                                     src="/media/{{ product.image }}"
                                      alt="">
                             </a>
                             <div class="card-body">
                                 <h4 class="card-title">
-                                    <a href="#">{{ product.name }}</a>
+                                    <a href="{{ product.pk }}">{{ product.name }}</a>
                                 </h4>
                                 <h5>{{ product.price }}</h5>
                                 <p class="card-text">{{ product.description }}</p>
