@@ -8,7 +8,6 @@ class ProductCategory(models.Model):
 	def __str__(self):
 		return self.name
 
-
 class Product(models.Model):
 	name = models.CharField(max_length=256)
 	image = models.ImageField(upload_to='products_images', blank=True)
@@ -20,5 +19,3 @@ class Product(models.Model):
 
 	def __str__(self):
 		return f'{self.name} {self.category.name}'
-
-
