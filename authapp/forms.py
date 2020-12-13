@@ -14,6 +14,7 @@ class UserLoginForm(AuthenticationForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'
 
+
 class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
