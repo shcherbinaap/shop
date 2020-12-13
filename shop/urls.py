@@ -6,11 +6,13 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', mainapp_views.main, name='main'),
-    path('products/', include('mainapp.urls', namespace='products')),
-    # path('products/', mainapp_views.products, name='products'),
-    path('text_context/1/', mainapp_views.text_context),
+    path('', mainapp_views.main, name = 'main'),
+    path('products/', include('mainapp.urls', namespace = 'products')),
+    path('auth/', include('authapp.urls')),
+
+    # path('text_context/', mainapp_views.text_context),
+
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
