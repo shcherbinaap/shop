@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.urls import reverse
-from authapp.forms import UserLoginForm, UserRegisterForm
+from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm
 
 
 def login(request):
@@ -41,3 +41,14 @@ def register(request):
     context = {'form': form}
 
     return render(request, 'authapp/register.html', context = context)
+
+def profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(data = request.POST, instance = request.user)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('authapp:profile'))
+    else:
+        form = UserProfileForm(instance = request.user)
+    context = {'form': form}
+    return render(request, 'authapp/profile.html', context = context)
