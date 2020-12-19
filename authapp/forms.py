@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
+from django import forms
 from authapp.models import User
 
 
@@ -31,14 +32,19 @@ class UserRegisterForm(UserCreationForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'
 
+
 class UserProfileForm(UserChangeForm):
+    avatar = forms.ImageField(widget = forms.FileInput())
+
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'username', 'email')
+        fields = ('first_name', 'last_name', 'username', 'email', 'avatar', 'age')
 
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs['readonly'] = True
-        self.fields['email'].widget.attrs['readonly'] = True
+
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'
+        self.fields['username'].widget.attrs['readonly'] = True
+        self.fields['email'].widget.attrs['readonly'] = True
+        self.fields['avatar'].widget.attrs['class'] = 'custom-file-input'
