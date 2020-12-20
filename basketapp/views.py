@@ -1,9 +1,13 @@
 from django.shortcuts import HttpResponseRedirect, get_object_or_404
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.template.loader import render_to_string
+from django.http import JsonResponse
+
 from mainapp.models import Product
 from basketapp.models import Basket
-from django.contrib import messages
 
-
+@login_required
 def basket_add(request, id_product=None):
     product = get_object_or_404(Product, id=id_product)
     if product.quantity == 0:
@@ -25,7 +29,7 @@ def basket_add(request, id_product=None):
     basket.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-
+@login_required
 def basket_remove(request, id=None):
     basket = Basket.objects.get(id=id)
     product = get_object_or_404(Product, id = basket.product.id)
@@ -48,5 +52,5 @@ def basket_edit(request, id, quantity):
         context = {
             'baskets': baskets,
         }
-        result = render_to_string('basketapp/basket.html', context)
+        result = render_to_string('basket.html', context)
         return JsonResponse({'result': result})
