@@ -8,7 +8,7 @@ def main(request):
     }
     return render(request, 'mainapp/index.html', context=context)
 
-def products(request):
+def products(request, pk=None):
     # context = {
     #     'titlepage': 'каталог товаров',
     #     'products': [
