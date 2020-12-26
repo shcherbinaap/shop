@@ -10,6 +10,7 @@ urlpatterns = [
     path('products/', include('mainapp.urls', namespace = 'products')),
     path('auth/', include('authapp.urls')),
     path('baskets/', include('basketapp.urls', namespace = 'baskets')),
+    path('admin-staff/', include('adminapp.urls', namespace = 'admin-staff')),
 
     # path('text_context/', mainapp_views.text_context),
 
