@@ -1,0 +1,48 @@
+{% extends 'adminapp/base.html' %}
+
+{% block content %}
+    <h1 class="mt-4">Категории</h1>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table mr-1"></i>
+            Пользователи
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Наименование категории</th>
+                        <th>Описание</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>Наименование категории</th>
+                        <th>Описание</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {% for catalog in catalogs %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'admin-staff:admin_catalogs_update' catalog.id %}" style="color: dodgerblue">
+                                    {{ catalog.name }}
+                                </a>
+                            </td>
+                            <td>{{ catalog.description }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-success">
+                <a href="{% url 'admin-staff:admin_catalogs_create' %}" style="color: white;">
+                    Создать категорию
+                </a>
+            </button>
+        </div>
+    </div>
+{% endblock %}
