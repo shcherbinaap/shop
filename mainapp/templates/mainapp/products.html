@@ -15,10 +15,11 @@
                 <h1 class="my-4">GeekShop</h1>
                 <div class="list-group">
                     {% for catalog in catalogs %}
-                        <a href="#" class="list-group-item">{{ catalog.name }}</a>
+                        <a href="{% url 'mainapp:product' catalog.id %}" class="list-group-item">
+                            {{ catalog.name }}
+                        </a>
                     {% endfor %}
                 </div>
-
             </div>
             <!-- /.col-lg-3 -->
 

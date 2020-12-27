@@ -10,14 +10,17 @@ def main(request):
     return render(request, 'mainapp/index.html', context = context)
 
 
-def products(request, pk = None):
-    contex = {
+def products(request, category_id = None):
+    context = {
         'titlepage': 'каталог товаров',
         'products': Product.objects.all(),
         'catalogs': ProductCategory.objects.all(),
     }
+    if category_id:
+        products = Product.objects.filter(category_id = category_id)
+        context.update({'products': products})
 
-    return render(request, 'mainapp/products.html', context = contex)
+    return render(request, 'mainapp/products.html', context = context)
 
 
 def text_context(request):
