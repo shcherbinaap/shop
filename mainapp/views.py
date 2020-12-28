@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from mainapp.models import Product, ProductCategory
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def main(request):
     context = {
@@ -10,14 +11,27 @@ def main(request):
     return render(request, 'mainapp/index.html', context = context)
 
 
-def products(request, pk = None):
-    contex = {
+def products(request, category_id = None, page = 1):
+
+    context = {
         'titlepage': 'каталог товаров',
-        'products': Product.objects.all(),
         'catalogs': ProductCategory.objects.all(),
     }
+    if category_id:
+        products = Product.objects.filter(category_id = category_id).order_by('price')
+    else:
+        products = Product.objects.all().order_by('price')
 
-    return render(request, 'mainapp/products.html', context = contex)
+    paginator = Paginator(products, 3)
+    try:
+        products_paginator = paginator.page(page)
+    except PageNotAnInteger:
+        products_paginator = paginator.page(1)
+    except EmptyPage:
+        products_paginator = paginator.page(paginator.num_pages)
+    context.update({'products': products_paginator})
+
+    return render(request, 'mainapp/products.html', context = context)
 
 
 def text_context(request):
