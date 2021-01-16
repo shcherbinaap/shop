@@ -7,6 +7,7 @@ from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm
 from authapp.models import User
 from basketapp.models import Basket
 
+
 def send_verify_email(user):
     verify_link = reverse('authapp:verify', args = [user.email, user.activation_key])
 
@@ -18,7 +19,7 @@ def send_verify_email(user):
 
 def verify(request, email, activation_key):
     try:
-        user = User.objects.get(email=email)
+        user = User.objects.get(email = email)
         if user.activation_key == activation_key and not user.is_activation_key_expired():
             user.is_active = True
             activation_key = None
@@ -42,7 +43,7 @@ def login(request):
                 return HttpResponseRedirect(reverse('main'))
     else:
         form = UserLoginForm()
-    
+
     context = {'form': form}
     return render(request, 'authapp/login.html', context = context)
 
@@ -58,7 +59,8 @@ def register(request):
         if form.is_valid():
             user = form.save()
             if send_verify_email(user):
-                messages.success(request, 'Вы успешно зарегистрировались!')
+                messages.success(request,
+                                 'Вы успешно зарегистрировались!Ссылка для активации акаунта выслана Вам на почту!')
 
             return HttpResponseRedirect(reverse('authapp:login'))
 
@@ -68,6 +70,7 @@ def register(request):
     context = {'form': form}
 
     return render(request, 'authapp/register.html', context = context)
+
 
 def profile(request):
     if request.method == 'POST':
@@ -79,5 +82,6 @@ def profile(request):
         form = UserProfileForm(instance = request.user)
     context = {
         'form': form,
+        'baskets': Basket.objects.filter(user = request.user)
     }
     return render(request, 'authapp/profile.html', context = context)
