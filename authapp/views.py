@@ -1,8 +1,34 @@
+from django.conf import settings
+from django.core.mail import send_mail
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.urls import reverse
 from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm
+from authapp.models import User
 from basketapp.models import Basket
+
+
+def send_verify_email(user):
+    verify_link = reverse('authapp:verify', args = [user.email, user.activation_key])
+
+    subject = f'подтверждение учетной записи {user.username}'
+    message = f'Для подтверждения пройдите по ссылке {settings.DOMAIN}{verify_link}'
+
+    return send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently = False)
+
+
+def verify(request, email, activation_key):
+    try:
+        user = User.objects.get(email = email)
+        if user.activation_key == activation_key and not user.is_activation_key_expired():
+            user.is_active = True
+            activation_key = None
+            user.save()
+            auth.login(request, user)
+            return render(request, 'authapp/verification.html')
+    except Exception as ex:
+        return HttpResponseRedirect(reverse('main'))
+
 
 def login(request):
     if request.method == 'POST':
@@ -17,7 +43,7 @@ def login(request):
                 return HttpResponseRedirect(reverse('main'))
     else:
         form = UserLoginForm()
-    
+
     context = {'form': form}
     return render(request, 'authapp/login.html', context = context)
 
@@ -31,8 +57,11 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(data = request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Вы успешно зарегистрировались!')
+            user = form.save()
+            if send_verify_email(user):
+                messages.success(request,
+                                 'Вы успешно зарегистрировались!Ссылка для активации акаунта выслана Вам на почту!')
+
             return HttpResponseRedirect(reverse('authapp:login'))
 
     else:
@@ -41,6 +70,7 @@ def register(request):
     context = {'form': form}
 
     return render(request, 'authapp/register.html', context = context)
+
 
 def profile(request):
     if request.method == 'POST':
