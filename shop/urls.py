@@ -11,6 +11,7 @@ urlpatterns = [
     path('auth/', include('authapp.urls')),
     path('baskets/', include('basketapp.urls', namespace = 'baskets')),
     path('admin-staff/', include('adminapp.urls', namespace = 'admin-staff')),
+    path('order/', include('ordersapp.urls', namespace = 'order')),
 
     # path('text_context/', mainapp_views.text_context),
 
