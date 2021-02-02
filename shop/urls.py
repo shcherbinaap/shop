@@ -14,6 +14,8 @@ urlpatterns = [
 
     # path('text_context/', mainapp_views.text_context),
 
+    path('', include('social_django.urls', namespace = 'social')),
+
 ]
 
 if settings.DEBUG:
