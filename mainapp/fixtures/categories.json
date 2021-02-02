@@ -1,0 +1,1 @@
+[{"model": "mainapp.productcategory", "pk": 1, "fields": {"name": "\u041e\u0431\u0443\u0432\u044c", "description": "\u041a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u044f \u043e\u0431\u0443\u0432\u0438"}}, {"model": "mainapp.productcategory", "pk": 2, "fields": {"name": "\u041d\u043e\u0432\u0438\u043d\u043a\u0438", "description": ""}}]
