@@ -8,6 +8,8 @@ window.onload = function () {
     var order_total_quantity = parseInt($('.order_total_quantity').text()) || 0;
     var order_total_price = parseFloat($('.order_total_cost').text().replace(',', '.')) || 0;
 
+    //TODO Устранить проблему с подсчетом общей суммы покупки и количеством товаров
+
     function orderSummaryRecalc() {
         order_total_quantity = 0;
         order_total_cost = 0;
