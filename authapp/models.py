@@ -23,8 +23,8 @@ class User(AbstractUser):
 
 
 class UserProfile(models.Model):
-    MALE = ' M'
-    FEMALE = ' W'
+    MALE = 'M'
+    FEMALE = 'W'
 
     GENDER_CHOICES = (
         (MALE, 'М'),
