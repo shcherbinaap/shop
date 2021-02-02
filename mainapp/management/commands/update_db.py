@@ -14,7 +14,7 @@ from mainapp.models import ProductCategory, Product
 from django.contrib.auth.models import User
 import json, os
 
-JSON_PATH = 'mainapp/json'
+JSON_PATH = 'mainapp/fixtures'
 
 
 def load_from_json(file_name):
