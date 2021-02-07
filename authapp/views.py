@@ -3,6 +3,8 @@ from django.core.mail import send_mail
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+
 from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm, UserProfileEditForm
 from authapp.models import User
 from basketapp.models import Basket
@@ -31,7 +33,7 @@ def verify(request, email, activation_key):
     except Exception as ex:
         return HttpResponseRedirect(reverse('main'))
 
-
+@csrf_exempt
 def login(request):
     if request.method == 'POST':
         form = UserLoginForm(data = request.POST)
