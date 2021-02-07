@@ -9,6 +9,8 @@ from basketapp.models import Basket
 
 
 def send_verify_email(user):
+    # TODO сделать отправку писем на реальную почту и приема ссылки с нее
+
     verify_link = reverse('authapp:verify', args = [user.email, user.activation_key])
 
     subject = f'подтверждение учетной записи {user.username}'
