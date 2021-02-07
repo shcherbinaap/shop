@@ -42,10 +42,10 @@ INSTALLED_APPS = [
     'authapp',
     'basketapp',
     'adminapp',
-    'ordersapp'
+    'ordersapp',
 
     'debug_toolbar',
-    'template_profiler_panel'
+    'template_profiler_panel',
 
 ]
 
