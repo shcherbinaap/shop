@@ -33,7 +33,7 @@ def verify(request, email, activation_key):
     except Exception as ex:
         return HttpResponseRedirect(reverse('main'))
 
-@csrf_exempt
+# @csrf_exempt
 def login(request):
     if request.method == 'POST':
         form = UserLoginForm(data = request.POST)
