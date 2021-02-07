@@ -177,7 +177,9 @@ AUTH_USER_MODEL = 'authapp.User'
 
 LOGIN_URL = '/authapp/login'
 
-DOMAIN = 'http://localhost:8000'
+# DOMAIN = 'http://localhost:8000'
+DOMAIN = 'http://185.20.227.45'
+
 
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = '25'
