@@ -90,7 +90,9 @@ class OrderUpdate(UpdateView):
         if self.request.POST:
             formset = OrderFormSet(self.request.POST, instance = self.object)
         else:
-            formset = OrderFormSet(instance = self.object)
+            queryset = self.object.orderitems.select_related()
+            formset = OrderFormSet(instance = self.object, queryset = queryset)
+            # formset = OrderFormSet(instance = self.object)
             for form in formset.forms:
                 if form.instance.pk:
                     form.initial['price'] = form.instance.product.price
@@ -127,9 +129,10 @@ def order_forming_complete(request, pk):
     order.save()
     return HttpResponseRedirect(reverse('ordersapp:orders'))
 
+
 def get_product_price(request, pk):
     if request.is_ajax():
-        product_item = Product.objects.filter(pk=int(pk)).first()
+        product_item = Product.objects.filter(pk = int(pk)).first()
         if product_item:
             return JsonResponse({'price': product_item.price})
         return JsonResponse({'price': 0})
