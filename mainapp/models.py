@@ -32,4 +32,4 @@ class Product(models.Model):
 
     @staticmethod
     def get_items():
-        Product.objects.filter(is_active = True).order_by('category', 'name')
+        return Product.objects.filter(is_active = True).order_by('category', 'name')

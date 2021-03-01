@@ -3,12 +3,16 @@ from django.core.mail import send_mail
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+
 from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm, UserProfileEditForm
 from authapp.models import User
 from basketapp.models import Basket
 
 
 def send_verify_email(user):
+    # TODO сделать отправку писем на реальную почту и приема ссылки с нее
+
     verify_link = reverse('authapp:verify', args = [user.email, user.activation_key])
 
     subject = f'подтверждение учетной записи {user.username}'
@@ -29,7 +33,7 @@ def verify(request, email, activation_key):
     except Exception as ex:
         return HttpResponseRedirect(reverse('main'))
 
-
+# @csrf_exempt
 def login(request):
     if request.method == 'POST':
         form = UserLoginForm(data = request.POST)
@@ -86,6 +90,6 @@ def profile(request):
     context = {
         'form': form,
         'profile_form': profile_form,
-        'baskets': Basket.objects.filter(user = request.user)
+        'baskets': Basket.objects.filter(user = request.user).select_related()
     }
     return render(request, 'authapp/profile.html', context = context)

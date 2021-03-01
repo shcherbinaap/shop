@@ -76,6 +76,7 @@ class OrderItem(models.Model):
         verbose_name = 'продукт',
         on_delete = models.CASCADE
     )
+
     quantity = models.PositiveIntegerField(
         verbose_name = 'количество',
         default = 0
